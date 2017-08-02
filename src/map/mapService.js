@@ -1,41 +1,32 @@
 /**
  * Created by xiaowei on 2017/7/23.
  */
+import data from './data.json';
+
+let originLocations = data.originLocations;
+
 export default function () {
   let map = new AMap.Map('map', {
     resizeEnable: true,
-    zoom: 11
+    center: [120.079071, 30.155238],
+    zoom: 15
   });
 
-  //地图中添加地图操作ToolBar插件
-  map.plugin(['AMap.ToolBar'], function () {
-    //设置地位标记为自定义标记
-    let toolBar = new AMap.ToolBar();
-    map.addControl(toolBar);
-  });
+  let initMap = () => {
+    let createMarker = (place) => {
+      new AMap.Marker({
+        map: map,
+        position: [place.lat, place.long],
+        title: place.name,
+        animation: 'AMAP_ANIMATION_DROP'
+        // content: '<div>' + place.name + '</div>'
+      });
+    };
 
-  AMap.service(["AMap.PlaceSearch"], function () {
-    let placeSearch = new AMap.PlaceSearch({ //构造地点查询类
-      pageSize: 5,
-      pageIndex: 1,
-      city: "0571"//城市
-    });
-    //关键字查询
-    placeSearch.search('西湖', function (status, result) {
-      let searchResults = [], markers = [];
-      if (status === 'complete') {
-        searchResults = result.poiList.pois;
-      }
-      if (searchResults.length) {
-        for (let i = 0; i < searchResults.length; i++) {
-          let addr = searchResults[i];
-          let marker = new AMap.Marker({
-            position: addr.location,
-            title: addr.name,
-            map: map
-          });
-        }
-      }
-    });
-  });
+    for (let i = 0; i < originLocations.length; i++) {
+      createMarker(originLocations[i]);
+    }
+  };
+
+  initMap();
 }

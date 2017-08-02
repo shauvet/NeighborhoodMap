@@ -8,7 +8,7 @@ export default function () {
       this.searchAction = () => {};
     },
     template: `<div class="search-area">
-<input type="text" data-bind="textInput: searchVal">
+<input type="text" id="searchVal" name="searchVal" data-bind="textInput: searchVal">
 <button type="button" data-bind="click: searchAction">Filter</button>
 </div>`
   })

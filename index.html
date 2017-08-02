@@ -61,9 +61,18 @@
 <body>
 
 <div id="app">
-  <nav>Bart Locations</nav>
-  <search-bar></search-bar>
-  <list params="content: children"></list>
+  <nav>附近酒店</nav>
+  <div class="search-area">
+    <input type="text" id="searchVal" name="searchVal" data-bing="textInput: searchVal, event: {keyup: filterPlaces}">
+    <button type="button">Filter</button>
+  </div>
+  <div class="list-area">
+    <ul class="list-area" data-bind="foreach: placeList">
+      <li>
+        <span data-bind="text: name"></span>
+      </li>
+    </ul>
+  </div>
 </div>
 <div id="map"></div>
 <div id="panel"></div>

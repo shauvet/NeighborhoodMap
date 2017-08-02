@@ -12,16 +12,10 @@ export default function () {
   });
   ko.components.register('list', {
     viewModel: function (params) {
-      this.children = ko.observableArray(params.content);
+      this.placeList = ko.observableArray(params.content);
     },
-    template: `<ul class="list-area" data-bind="foreach: children">
+    template: `<ul class="list-area" data-bind="foreach: placeList">
             <list-item  params="value: name"></list-item>
         </ul>`
   });
-
-  var viewModel = {
-    "children": [{"name": "Arnie"}, {"name": "Arnie2"}, {"name": "Arnie3"}]
-  };
-
-  ko.applyBindings(viewModel);
 }
