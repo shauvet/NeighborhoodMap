@@ -1,16 +1,11 @@
 /**
  * Created by xiaowei on 2017/7/22.
  */
+import ko from 'knockout';
 import data from './map/data.json';
-// import SearchBar from './components/searchBar';
-// import List from './components/list';
-import MapInit from './map/mapService';
+import {map, markers} from './map/mapService';
 
 let originLocations = data.originLocations;
-
-// SearchBar();
-// List();
-MapInit();
 
 let ViewModel = function() {
   let vm = this;
@@ -18,25 +13,48 @@ let ViewModel = function() {
   vm.placeList = ko.observableArray([]);
   vm.filteredPlaces = ko.observableArray([]);
 
-  for (let i = 0; i < originLocations.length; i++) {
-    vm.placeList.push(originLocations[i]);
-  }
-
-  vm.filterPlaces = () => {
-    if (!vm.searchVal()) return;
+  vm.filterPlaces = ko.computed(function() {
+    if (vm.searchVal() === '') {
+      vm.filteredPlaces([]);
+      for (let i = 0; i < originLocations.length; i++) {
+        vm.filteredPlaces.push(originLocations[i]);
+      }
+      markers.forEach((marker) => {
+        marker.show();
+      });
+      return;
+    }
     let searchVal = vm.searchVal().trim().toLowerCase();
-    
-    vm.placeList.forEach(function (place) {
-      if (place.name.toLowerCase().includes(searchVal)) {
+    vm.filteredPlaces([]);
+
+    originLocations.forEach((place) => {
+      console.log(place.name.indexOf(searchVal));
+      if (place.name.indexOf(searchVal) >= 0) {
+        vm.filteredPlaces.push(place);
       }
     });
-  };
-
-  AMap.plugin(['AMap.ToolBar'], () => {
-    //设置地位标记为自定义标记
-    let toolBar = new AMap.ToolBar();
-    map.addControl(toolBar);
+    
+    markers.forEach((marker) => {
+      if (marker.Qi.title.indexOf(searchVal) >= 0) {
+        marker.show();
+      } else {
+        marker.hide();
+      }
+    });
   });
+  
+  vm.selectOneHotel = function (hotel) {
+    vm.searchVal(hotel.name);
+    vm.filteredPlaces([]);
+    vm.filteredPlaces.push(hotel);
+    markers.forEach((marker) => {
+      if (marker.Qi.title === hotel.name) {
+        marker.show();
+      } else {
+        marker.hide();
+      }
+    });
+  }
 };
 
 ko.applyBindings(new ViewModel());
