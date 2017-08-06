@@ -24,13 +24,13 @@
     }
     #app {
       float: left;
-      width: 15em;
+      width: 15%;
       height: 100%;
       background-color: #333;
       color: #eee;
     }
     #map {
-      margin-left: 15em;
+      margin-left: 15%;
       height: 100%;
     }
     div.search-area {
@@ -42,7 +42,7 @@
       height: 30px;
       background-image: url('./src/static/search.png');
       background-repeat: no-repeat;
-      background-position: 17em center;
+      background-position: 90% center;
     }
     ul.list-area li {
       list-style: none;
@@ -54,13 +54,13 @@
 </head>
 <body>
 <div id="app">
-  <nav>附近酒店</nav>
+  <nav>附近景点</nav>
   <div class="search-area">
     <input type="text" id="searchVal" name="searchVal" data-bind="textInput: searchVal">
   </div>
   <div class="list-area">
     <ul class="list-area" data-bind="foreach: filteredPlaces">
-      <li data-bind="click: $parent.selectOneHotel">
+      <li data-bind="click: $parent.selectOnePlace">
         <span data-bind="text: name"></span>
       </li>
     </ul>

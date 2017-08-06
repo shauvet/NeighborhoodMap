@@ -3,7 +3,7 @@
  */
 import ko from 'knockout';
 import data from './map/data.json';
-import {map, markers} from './map/mapService';
+import {markers} from './map/mapService';
 
 let originLocations = data.originLocations;
 
@@ -13,6 +13,7 @@ let ViewModel = function() {
   vm.placeList = ko.observableArray([]);
   vm.filteredPlaces = ko.observableArray([]);
 
+  //过滤景点和标注点
   vm.filterPlaces = ko.computed(function() {
     if (vm.searchVal() === '') {
       vm.filteredPlaces([]);
@@ -43,12 +44,13 @@ let ViewModel = function() {
     });
   });
   
-  vm.selectOneHotel = function (hotel) {
-    vm.searchVal(hotel.name);
+  //单击选择某个景点
+  vm.selectOnePlace = function (place) {
+    vm.searchVal(place.name);
     vm.filteredPlaces([]);
-    vm.filteredPlaces.push(hotel);
+    vm.filteredPlaces.push(place);
     markers.forEach((marker) => {
-      if (marker.Qi.title === hotel.name) {
+      if (marker.Qi.title === place.name) {
         marker.show();
       } else {
         marker.hide();
