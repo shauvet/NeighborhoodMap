@@ -1,7 +1,6 @@
 /**
  * Created by xiaowei on 2017/7/22.
  */
-// import map from './map/initMap';
 import ko from 'knockout';
 import data from './map/data.json';
 import {markers} from './map/mapService';
@@ -35,7 +34,7 @@ let ViewModel = function() {
         vm.filteredPlaces.push(place);
       }
     });
-    
+
     markers.forEach((marker) => {
       if (marker.Qi.title.indexOf(searchVal) >= 0) {
         marker.show();
@@ -44,7 +43,7 @@ let ViewModel = function() {
       }
     });
   });
-  
+
   //单击选择某个景点
   vm.selectOnePlace = function (place) {
     vm.searchVal(place.name);

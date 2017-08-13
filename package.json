@@ -36,6 +36,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "jsonp": "^0.2.1",
     "knockout": "^3.4.2"
   }

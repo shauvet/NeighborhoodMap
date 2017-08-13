@@ -1,7 +1,7 @@
 /**
  * Created by xiaowei on 2017/7/23.
  */
-import ko from 'knockout';
+// import AMap from './initMap';
 import data from './data.json';
 import JSONP from 'jsonp';
 
